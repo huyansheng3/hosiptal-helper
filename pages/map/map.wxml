@@ -1,0 +1,14 @@
+<!--pages/map.wxml-->
+<view class='map-container'>
+  <map id="hospitalMap" class='map-container__map' show-compass	scale="{{scale}}" enable-zoom markers="{{markers}}" longitude="{{longitude}}" latitude="{{latitude}}" bindmarkertap="markertap" bindregionchange="regionchange" show-location></map>
+
+  <view class='map-container__checkbox'>
+
+    <checkbox-group  bindchange="checkboxChange">
+    <label class="checkbox" wx:for="{{items}}">
+      <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+    </label>
+  </checkbox-group>
+  </view>
+  
+</view>

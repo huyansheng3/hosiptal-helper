@@ -8,10 +8,11 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"nodeModules": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.4",
+	"libVersion": "2.3.0",
 	"appid": "wxc9587b7441bc0b54",
 	"projectname": "hospital-helper",
 	"debugOptions": {

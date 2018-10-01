@@ -12,6 +12,6 @@
   </view>
 
   <view>
-  <button bindtap='bindGoMap'>进去地图</button>
+    <button bindtap='bindGoMap'>进去地图</button>
   </view>
 </view>
