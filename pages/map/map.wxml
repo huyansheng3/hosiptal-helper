@@ -1,14 +1,19 @@
 <!--pages/map.wxml-->
 <view class='map-container'>
-  <map id="hospitalMap" class='map-container__map' show-compass	scale="{{scale}}" enable-zoom markers="{{markers}}" longitude="{{longitude}}" latitude="{{latitude}}" bindmarkertap="markertap" bindregionchange="regionchange" show-location></map>
+  <map id="hospitalMap" class='map-container__map' show-compass scale="{{scale}}" enable-zoom="{{true}}" markers="{{markers}}" longitude="{{longitude}}" latitude="{{latitude}}" bindmarkertap="markertap" bindregionchange="regionchange" show-location></map>
 
-  <view class='map-container__checkbox'>
+  <cover-view class='map-container__control'>
+    <cover-image bindtap='bindtapMinus' class='mccontrol__image mccontrol__minus' src="/resources/minus.svg"></cover-image>
+    <cover-image bindtap='bindtapPlus' class='mccontrol__image mccontrol__plus' src="/resources/plus.svg"></cover-image>
+  </cover-view>
 
-    <checkbox-group  bindchange="checkboxChange">
-    <label class="checkbox" wx:for="{{items}}">
-      <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
-    </label>
-  </checkbox-group>
-  </view>
-  
+  <cover-view class='map-container__checkbox'>
+
+    <checkbox-group bindchange="checkboxChange">
+      <label class="checkbox" wx:for="{{items}}">
+        <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+      </label>
+    </checkbox-group>
+  </cover-view>
+
 </view>

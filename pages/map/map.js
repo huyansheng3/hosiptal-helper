@@ -1,24 +1,6 @@
 // pages/map.js
 const hospitals = require('./hospitals');
 
-const typesHospitals = hospitals.reduce((prev, curr) => {
-  if (prev[curr.type]) {
-    prev[curr.type].push(curr)
-  } else {
-    prev[curr.type] = [curr]
-  }
-  return prev
-}, {})
-
-const types = Object.keys(typesHospitals)
-
-const items = types.map(type => {
-  return {
-    name: type,
-    value: type
-  }
-})
-
 const markers = hospitals.map(h => {
   return {
     ...h,
@@ -27,11 +9,36 @@ const markers = hospitals.map(h => {
     height: 50,
     label: h.name,
     callout: {
-      content: h.name,
-      display: 'BYCLICK'
+      content: `医院编号：${h.id}\n${h.name}`,
+      padding: 10,
+      textAlign: 'center',
+      borderRadius: 4,
+      fontSize: 15,
+      display: 'BYCLICK',
     }
   }
 })
+
+const typesMarkers = markers.reduce((prev, curr) => {
+  if (prev[curr.type]) {
+    prev[curr.type].push(curr)
+  } else {
+    prev[curr.type] = [curr]
+  }
+  return prev
+}, {})
+
+const types = Object.keys(typesMarkers)
+
+const items = types.map(type => {
+  return {
+    name: type,
+    value: type,
+    checked: type === '对外综合'
+  }
+})
+
+const initMarkers = typesMarkers['对外综合']
 
 Page({
   /**
@@ -42,19 +49,43 @@ Page({
     latitude: null,
     scale: 16,
     items,
-    markers,
+    markers: initMarkers,
   },
 
   checkboxChange: function(e) {
-    console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+
+    console.time('filter')
+    const selectedItems = e.detail.value || []
+
+    const showMarkers = selectedItems.reduce((prev, curr) => {
+      return prev.concat(typesMarkers[curr])
+    }, [])
+
+    console.timeEnd('filter')
+
+    this.setData({
+      markers: showMarkers
+    })
   },
 
   regionchange(e) {
-    console.log(e.type)
+    console.log(e)
   },
 
   markertap(e) {
     console.log(e.markerId)
+  },
+
+  bindtapMinus() {
+    this.setData({
+      scale: this.data.scale - 1
+    })
+  },
+
+  bindtapPlus() {
+    this.setData({
+      scale: this.data.scale + 1
+    })
   },
 
   /**
